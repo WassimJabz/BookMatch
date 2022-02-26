@@ -1,15 +1,21 @@
 package bluescorpions.BookMatchBackend.model;
 
-import java.util.List;
+import java.util.HashSet;
 import java.util.Objects;
-
+import java.util.Set;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 @Entity
 public class Book {
 	private String isbn;
 	private String title;
-	private List<String> authors;
+	private Set<String> authors = new HashSet<String>();
 	private String coverUrl;
 	private String subject;
 	
@@ -26,10 +32,14 @@ public class Book {
 	public void setTitle(String title) {
 		this.title = title;
 	}
-	public List<String> getAuthors() {
+	
+	@ElementCollection(fetch = FetchType.EAGER)
+	@OnDelete(action = OnDeleteAction.CASCADE)
+	@JoinColumn(name = "book_isbn")
+	public Set<String> getAuthors() {
 		return authors;
 	}
-	public void setAuthors(List<String> authors) {
+	public void setAuthors(Set<String> authors) {
 		this.authors = authors;
 	}
 	public String getCoverUrl() {
@@ -51,6 +61,7 @@ public class Book {
 		return Objects.equals(authors, other.authors) && Objects.equals(coverUrl, other.coverUrl)
 				&& Objects.equals(isbn, other.isbn) && Objects.equals(title, other.title);
 	}
+	
 	public String getSubject() {
 		return subject;
 	}
