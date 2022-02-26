@@ -1,8 +1,6 @@
 package bluescorpions.BookMatchBackend.model;
 
-import java.util.List;
 import java.util.Set;
-
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
@@ -15,7 +13,7 @@ public class Account {
     private String password;
     private String username;
     private String profilePicUrl;
-    private List<Book> books;
+    private Set<Book> books;
     private Set<Account> mates;
 
     @Id
@@ -46,10 +44,10 @@ public class Account {
     }
 
     @ManyToMany(fetch = FetchType.EAGER)
-    public List<Book> getBooks() {
+    public Set<Book> getBooks() {
         return books;
     }
-    public void setBooks(List<Book> books) {
+    public void setBooks(Set<Book> books) {
         this.books = books;
     }
 

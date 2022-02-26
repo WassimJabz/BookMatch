@@ -64,7 +64,7 @@ public class testAccountPersistence {
         book.setIsbn(isbn);
         book.setAuthors(authors);
         
-        ArrayList<Book> books = new ArrayList<Book>();
+        HashSet<Book> books = new HashSet<Book>();
         books.add(book);
         
         HashSet<Account> mates = new HashSet<Account>();
