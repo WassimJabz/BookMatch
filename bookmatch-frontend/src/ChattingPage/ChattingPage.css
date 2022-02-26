@@ -1,0 +1,108 @@
+.selection-container{
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    padding-top: var(--navbar-height);
+    width: 15rem;
+    height: 100%;
+    border: solid whitesmoke;
+    border-width: 0 1px 0 0;
+}
+
+.selection{
+    display: flex;
+    align-items: center;
+    height: 5rem;
+    padding: 0 1rem;
+    border: solid whitesmoke;
+    border-width: 0 0 1px 0;
+    cursor: pointer;
+}
+
+.selection:hover{
+    background-color: rgba(255, 255, 255, 0.116);
+}
+
+.selection > img{
+    width: 3rem;
+    height: 3rem;
+    border-radius: 100%;
+}
+
+.selection > div{
+    margin-left: 1rem;
+}
+
+.chat-container{
+    position: absolute;
+    left: 15rem;
+    top: var(--navbar-height);
+    right: 0;
+    bottom: 0;
+}
+
+.chat-container h1{
+    margin-left: 1rem;
+}
+
+.chat-box{
+    width: 100%;
+    padding: 1rem;
+    height: calc(100% - 3rem);
+}
+
+.chat-box .row{
+    width: 100%;
+    margin: 0.5rem 0;
+}
+
+.chat-box .row.sent{
+    direction: rtl;
+}
+
+.chat-box .row.received{
+    direction: ltr;
+}
+
+.chat-box .message{
+    direction: ltr;
+    width: fit-content;
+    max-width: 75%;
+    border-radius: 1rem;
+    padding: 0.5em 1em;
+}
+
+.chat-box .sent .message{
+    background-color: var(--color-accent);
+}
+
+.chat-box .row.received .message{
+    background-color: whitesmoke;
+    color: black;
+}
+
+.entry{
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    height: 3rem;
+    background-color: var(--color-accent);
+    display: flex;
+    align-items: center;
+    padding: 0 1rem;
+}
+
+.entry input{
+    border: none;
+    width: 100%;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    color: white;
+}
+
+.entry button {
+    font-size: 1rem;
+    color: white;
+}

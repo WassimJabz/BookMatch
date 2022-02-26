@@ -10,11 +10,10 @@
 
 .login-or-signup > h1{
     display: inline;
-    cursor: pointer;
     margin-right: 1rem;
 }
 
-.login-or-signup h1:nth-child(2){
+.not-selected{
     color: gray;
     cursor: pointer;
     font-size: 1.3rem;
