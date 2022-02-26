@@ -11,8 +11,8 @@ export default function LoginPage() {
     <div className="container">
         <div>
             <div class="login-or-signup">
-                <h1>{login ? 'Login' : 'Sign up'}</h1>
-                <h1 onClick={() => setLogin(!login)}>{login ? 'Sign up' : 'Login'}</h1>
+                <h1 className={login ? "" : "not-selected"} onClick={() => setLogin(true)}>Login</h1>
+                <h1 className={login ? "not-selected" : ""} onClick={() => setLogin(false)}>Sign up</h1>
             </div>
             <div className="form">
                 {login ? <></> : 
