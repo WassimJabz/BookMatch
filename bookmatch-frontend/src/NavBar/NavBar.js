@@ -8,6 +8,7 @@ export default function NavBar(){
             <nav>
                 <a href="/login">Login</a>
                 <a href="/profile">Profile</a>
+                <a href="/match">Match</a>
             </nav>
         </div>
     )
