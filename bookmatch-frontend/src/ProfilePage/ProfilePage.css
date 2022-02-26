@@ -82,16 +82,16 @@ section > h2{
     overflow-y: scroll;
 }
 
-.row{
+.line{
     display: flex;
     margin-bottom: 0.5rem;
     cursor: pointer;
 }
 
-.row:hover{
+.line:hover{
     background-color: rgba(255, 255, 255, 0.13);
 }
 
-.row > div{
+.line > div{
     flex: 100% 1 1;
 }

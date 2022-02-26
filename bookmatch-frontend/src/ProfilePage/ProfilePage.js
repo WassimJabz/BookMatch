@@ -114,7 +114,7 @@ const BookSelector = ({ setBook }) => {
             <input type="text" placeholder="Start typing..." value={query} onChange={(e) => setQuery(e.target.value)} />
             <div className="results">
                 {results.map(r =>
-                    <div onClick={() => setBook(r)} key={r.isbn} className="row">
+                    <div onClick={() => setBook(r)} key={r.isbn} className="line">
                         <div>{r.title}</div>
                         <div>{r.authors[0]}</div>
                         <div>{r.isbn}</div>
