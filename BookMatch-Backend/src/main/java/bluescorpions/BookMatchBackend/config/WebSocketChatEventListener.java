@@ -7,13 +7,17 @@ import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.messaging.SessionConnectedEvent;
 import org.springframework.web.socket.messaging.SessionDisconnectEvent;
-import bluescorpions.BookMatchBackend.model.WebSocketChatMessage;
+import bluescorpions.BookMatchBackend.dao.AccountRepository;
+import bluescorpions.BookMatchBackend.model.ChatMessage;
 
 @Component
 public class WebSocketChatEventListener {
 
     @Autowired
     private SimpMessageSendingOperations messagingTemplate;
+    
+    @Autowired
+    private AccountRepository accountRepository;
 
     @EventListener
     public void handleWebSocketConnectListener(SessionConnectedEvent event) {
@@ -24,12 +28,12 @@ public class WebSocketChatEventListener {
     public void handleWebSocketDisconnectListener(SessionDisconnectEvent event) {
         StompHeaderAccessor headerAccessor = StompHeaderAccessor.wrap(event.getMessage());
 
-        String username = (String) headerAccessor.getSessionAttributes().get("username");
-        if(username != null) {
+        String email = (String) headerAccessor.getSessionAttributes().get("email");
+        if(email != null) {
 
-            WebSocketChatMessage chatMessage = new WebSocketChatMessage();
+            ChatMessage chatMessage = new ChatMessage();
             chatMessage.setType("Leave");
-            chatMessage.setSender(username);
+            chatMessage.setSender(accountRepository.findByEmail(email));
 
             messagingTemplate.convertAndSend("/topic/public", chatMessage);
         }
