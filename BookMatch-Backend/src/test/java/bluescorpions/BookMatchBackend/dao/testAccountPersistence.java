@@ -1,8 +1,7 @@
 package bluescorpions.BookMatchBackend.dao;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 
 import org.junit.jupiter.api.Test;
@@ -83,9 +82,12 @@ public class testAccountPersistence {
         accountRepository.save(user);
     
 
-        Account userRetrieved = accountRepository.findByEmail(email);
-
-        assertEquals(user, userRetrieved);
+        //Account userRetrieved = accountRepository.findByEmail(email);
         
+        
+        
+        accountRepository.deleteById(email);
+        
+        assertNull(accountRepository.findByEmail(email));
     }
 }

@@ -7,5 +7,4 @@ import bluescorpions.BookMatchBackend.model.Account;
 public interface AccountRepository extends CrudRepository<Account, String>{
 
     public Account findByEmail(String email);
-    
 }
