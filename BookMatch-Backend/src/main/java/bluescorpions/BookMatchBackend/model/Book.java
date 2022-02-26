@@ -11,6 +11,7 @@ public class Book {
 	private String title;
 	private List<String> authors;
 	private String coverUrl;
+	private String subject;
 	
 	@Id
 	public String getIsbn() {
@@ -49,5 +50,11 @@ public class Book {
 		Book other = (Book) obj;
 		return Objects.equals(authors, other.authors) && Objects.equals(coverUrl, other.coverUrl)
 				&& Objects.equals(isbn, other.isbn) && Objects.equals(title, other.title);
+	}
+	public String getSubject() {
+		return subject;
+	}
+	public void setSubject(String subject) {
+		this.subject = subject;
 	}
 }
