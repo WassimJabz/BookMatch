@@ -1,1 +1,1 @@
-# CodeJam2022
+# CodeJam2022 project
