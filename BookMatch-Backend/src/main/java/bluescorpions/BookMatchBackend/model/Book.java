@@ -1,0 +1,53 @@
+package bluescorpions.BookMatchBackend.model;
+
+import java.util.List;
+import java.util.Objects;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+@Entity
+public class Book {
+	private String isbn;
+	private String title;
+	private List<String> authors;
+	private String coverUrl;
+	
+	@Id
+	public String getIsbn() {
+		return isbn;
+	}
+	public void setIsbn(String isbn) {
+		this.isbn = isbn;
+	}
+	public String getTitle() {
+		return title;
+	}
+	public void setTitle(String title) {
+		this.title = title;
+	}
+	public List<String> getAuthors() {
+		return authors;
+	}
+	public void setAuthors(List<String> authors) {
+		this.authors = authors;
+	}
+	public String getCoverUrl() {
+		return coverUrl;
+	}
+	public void setCoverUrl(String coverUrl) {
+		this.coverUrl = coverUrl;
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Book other = (Book) obj;
+		return Objects.equals(authors, other.authors) && Objects.equals(coverUrl, other.coverUrl)
+				&& Objects.equals(isbn, other.isbn) && Objects.equals(title, other.title);
+	}
+}
