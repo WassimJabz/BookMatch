@@ -4,8 +4,20 @@
     justify-content: center;
 }
 
-h1{
+.login-or-signup{
     margin-bottom: 2rem;
+}
+
+.login-or-signup > h1{
+    display: inline;
+    cursor: pointer;
+    margin-right: 1rem;
+}
+
+.login-or-signup h1:nth-child(2){
+    color: gray;
+    cursor: pointer;
+    font-size: 1.3rem;
 }
 
 label{
