@@ -46,9 +46,13 @@ const Chat = ({ user }) => {
     ]);
 
     function addMessage(sent, msg){
-        setMessages(() => 
-            messages.push({ sent, msg })
-        )
+        setMessages(ms => [...ms, { sent, msg }])
+    }
+
+    const [mTyped, setMTyped] = useState('');
+    function sendMessage(){
+        addMessage(true, mTyped);
+        setMTyped('');
     }
 
     return (
@@ -68,8 +72,8 @@ const Chat = ({ user }) => {
                 }
             </div>
             <div className="entry">
-                <input type="text" placeholder="Type message..." />
-                <button>Send</button>
+                <input type="text" placeholder="Type message..." value={mTyped} onChange={(e) => setMTyped(e.target.value)} onKeyPress={(e) => e.key == 'Enter' ? sendMessage() : null } />
+                <button onClick={() => sendMessage()}>Send</button>
             </div>
         </div>
     )
