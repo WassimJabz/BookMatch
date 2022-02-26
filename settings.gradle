@@ -1,1 +1,2 @@
-include ':BookMatch-Backend'
+include 'BookMatch-Backend'
+rootProject.name = 'BookMatch'
