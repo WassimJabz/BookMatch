@@ -3,20 +3,16 @@ package bluescorpions.BookMatchBackend.model;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
+import javax.persistence.ManyToMany;
 
 @Entity
 public class Book {
 	private String isbn;
 	private String title;
-	private Set<String> authors = new HashSet<String>();
-	private String coverUrl;
+	private Set<String> authors;
 	private String subject;
 	
 	@Id
@@ -33,9 +29,7 @@ public class Book {
 		this.title = title;
 	}
 	
-	@ElementCollection(fetch = FetchType.EAGER)
-	@OnDelete(action = OnDeleteAction.CASCADE)
-	@JoinColumn(name = "book_isbn")
+	@ManyToMany(fetch = FetchType.EAGER)
 	public Set<String> getAuthors() {
 		return authors;
 	}
