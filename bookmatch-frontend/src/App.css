@@ -8,14 +8,6 @@
   box-sizing: border-box;
 }
 
-h1{
-  width: fit-content;
-}
-
-div{
-  width: fit-content;
-}
-
 html{
   --color-accent: #7b40be;
 
