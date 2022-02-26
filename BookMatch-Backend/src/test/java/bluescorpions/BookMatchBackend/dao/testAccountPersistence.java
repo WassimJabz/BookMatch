@@ -3,6 +3,7 @@ package bluescorpions.BookMatchBackend.dao;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -11,6 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import bluescorpions.BookMatchBackend.model.Account;
+import bluescorpions.BookMatchBackend.model.Author;
 import bluescorpions.BookMatchBackend.model.Book;
 
 @ExtendWith(SpringExtension.class)
@@ -22,6 +24,9 @@ public class testAccountPersistence {
 
     @Autowired
     BookRepository bookRepository;
+    
+    @Autowired
+    AuthorRepository authorRepository;
 
     @Test
     public void testFindBy(){
@@ -35,31 +40,52 @@ public class testAccountPersistence {
         String subject = "Novel";
         String coverUrl = "test.com";
         String isbn = "32342433423";
-        ArrayList<String> authors = new ArrayList<String>();
-        authors.add("wassim");
-        authors.add("enzo");
-
-        Account user = new Account();
-        user.setEmail(email);
-        user.setPassword(password);
-        user.setProfilePicUrl(profilePicUrl);
-        user.setUsername(username);
-
+        
+        String authorName = "Wassim";
+        String authorUrl = "test.imgur.fr";
+        Author author = new Author();
+        author.setName(authorName);
+        author.setUrl(authorUrl);
+        
+        String authorName2 = "Enzo";
+        String authorUrl2 = "test.imgur.fr";
+        Author author2 = new Author();
+        author2.setName(authorName2);
+        author2.setUrl(authorUrl2);;
+        
+        HashSet<Author> authors = new HashSet<Author>();
+        authors.add(author2);
+        authors.add(author);
+        
         Book book = new Book();
         book.setTitle(title);
         book.setSubject(subject);
         book.setCoverUrl(coverUrl);
         book.setIsbn(isbn);
         book.setAuthors(authors);
-
+        
+        ArrayList<Book> books = new ArrayList<Book>();
+        books.add(book);
+        
+        HashSet<Account> mates = new HashSet<Account>();
+        
+        Account user = new Account();
+        user.setEmail(email);
+        user.setPassword(password);
+        user.setProfilePicUrl(profilePicUrl);
+        user.setUsername(username);
+        user.setBooks(books);
+        user.setMates(mates);
+        
+        authorRepository.save(author);
+        authorRepository.save(author2);
         bookRepository.save(book);
         accountRepository.save(user);
     
 
-        Book bookRetrieved = bookRepository.findByIsbn(isbn);
         Account userRetrieved = accountRepository.findByEmail(email);
 
-        assertEquals(book, bookRetrieved);
         assertEquals(user, userRetrieved);
+        
     }
 }
