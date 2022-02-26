@@ -36,3 +36,39 @@
     transform: rotate(360deg);
   }
 }
+html{
+  background-color: #303030;
+}
+input[type="text"]{
+  color: gray;
+}
+h1{
+  font-size: 3rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: whitesmoke;
+}
+label{
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: wheat;
+  margin-right: 2rem;
+}
+
+.form label{
+  width: fit-content;
+  display:block;
+  margin-bottom: 0.2rem;
+  font-size: xx-large;
+}
+.form input{
+  font-size: x-large;
+  margin-bottom: 1rem;
+}
+
+button{
+  margin-top: 1em;
+  display: block;
+  font-size: xx-large;
+  width: fit-content;
+  border-radius: 0.25em;
+  padding: 0.25em 0.5em;
+}
