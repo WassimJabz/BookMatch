@@ -80,12 +80,7 @@ public class testAccountPersistence {
         authorRepository.save(author2);
         bookRepository.save(book);
         accountRepository.save(user);
-    
-
-        //Account userRetrieved = accountRepository.findByEmail(email);
-        
-        
-        
+       
         accountRepository.deleteById(email);
         
         assertNull(accountRepository.findByEmail(email));
