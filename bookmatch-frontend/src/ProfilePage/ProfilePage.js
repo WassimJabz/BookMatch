@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import './ProfilePage.css'
 
 export default function ProfilePage(){
@@ -6,11 +6,11 @@ export default function ProfilePage(){
     const [picUrl, setPicUrl] = useState('https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png');
     const [username, setUsername] = useState('username');
     const [email, setEmail] = useState('email@mail.com');
+    const [about, setAbout] = useState('My name is Wassim and I LOVE books!')
     const [book1, setBook1] = useState({
-        num: 1,
         isbn: '2435341235412',
         title: 'The best book ever',
-        author: 'Philippe Sarouphim Hochar'
+        authors: ['Philippe Sarouphim Hochar']
     });
     const [book2, setBook2] = useState(null);
     const [book3, setBook3] = useState(null);
@@ -23,9 +23,10 @@ export default function ProfilePage(){
             </div>
             <section>
                 <h2>Your info</h2>
-                <EditableInput title="Email:" value={email} />
-                <EditableInput title="Username:" value={username} onChange={(e) => setUsername(e.target.value)}/>
-                <EditableInput title="Profile pic url:" value={picUrl} onChange={(e) => setPicUrl(e.target.value)}/>
+                <EditableInput isArea={false} title="Email:" value={email} />
+                <EditableInput isArea={false} title="Username:" value={username} onChange={(e) => setUsername(e)}/>
+                <EditableInput isArea={false} title="Profile pic url:" value={picUrl} onChange={(e) => setPicUrl(e)}/>
+                <EditableInput isArea={true} title="About:" value={about} onChange={(e) => setAbout(e)}/>
             </section>
             <section>
                 <h2>Your favourites</h2>
@@ -37,7 +38,7 @@ export default function ProfilePage(){
     )
 }
 
-const EditableInput = ({ title, value, onChange }) => {
+const EditableInput = ({ isArea, title, value, onChange }) => {
 
     const [editMode, setEditMode] = useState(false);
 
@@ -46,17 +47,23 @@ const EditableInput = ({ title, value, onChange }) => {
             <label>{title}</label>
             <div className="field">
                 {editMode ?
-                    <input type="text" value={value} onChange={(e) => onChange(e)}/>
-                :
+                    isArea ?
+                        <textarea value={value} onChange={(e) => onChange(e.target.value)} />
+                        :
+                        <input type="text" value={value} onChange={(e) => onChange(e.target.value)}/>
+                    :
                     <div style={{display: 'inline-block'}}>{value}</div>
                 }
+                {onChange ? <button className="edit-save-button" onClick={() => setEditMode(!editMode)}>{editMode ? 'Save' : 'Edit'}</button> : <></>}
             </div>
-            {onChange ? <button className="edit-save-button" onClick={() => setEditMode(!editMode)}>{editMode ? 'S' : 'E'}</button> : <></>}
         </div>
     )
 }
 
 const BookSelection = ({ num, book, setBook }) => {
+
+    const [select, setSelect] = useState(false);
+
     return (
         <div className="book-selection">
             <h3>{`Book #${num}`}</h3>
@@ -64,13 +71,58 @@ const BookSelection = ({ num, book, setBook }) => {
             <>
             <div>{`ISBN: ${book.isbn}`}</div>
             <div>{`Title: ${book.title}`}</div>
-            <div>{`Author: ${book.author}`}</div>
+            <div>{`Author: ${book.authors[0]}`}</div>
+            <div>{`Category: ${book.category}`}</div>
             </>
             :
             <></>
             }
-            <button>{book ? 'Edit selection': 'Make selection'}</button>
+            <button onClick={() => setSelect(!select)}>{select ? 'Cancel selection' : book ? 'Edit selection': 'Make selection'}</button>
+            {select ? <BookSelector setBook={(b) => { setBook(b); setSelect(false) }} /> : <></>}
         </div>
 
     )
+}
+
+const BookSelector = ({ setBook }) => {
+
+    const [query, setQuery] = useState('');
+
+    useEffect(() => {
+        if(query.length <= 3) return;
+        let q = query.replace(' ', '+');
+        fetch(`https://www.googleapis.com/books/v1/volumes?q=${q}`).then(response => response.json().then(res =>{
+            let filtered = res.items.filter(r => {
+                return r && r.volumeInfo && r.volumeInfo.title && r.volumeInfo.authors && r.volumeInfo.industryIdentifiers && r.volumeInfo.categories;
+            })
+            let simplified = filtered.map(r => {
+                return {
+                    title: r.volumeInfo.title,
+                    authors: r.volumeInfo.authors,
+                    isbn: r.volumeInfo.industryIdentifiers[0].identifier,
+                    category: r.volumeInfo.categories[0]
+                }
+            })
+            setResults(() => simplified);
+        }));
+    }, [query]);
+
+    const [results, setResults] = useState([]);
+
+    return(
+        <>
+            <input type="text" placeholder="Start typing..." value={query} onChange={(e) => setQuery(e.target.value)} />
+            <div className="results">
+                {results.map(r =>
+                    <div onClick={() => setBook(r)} key={r.isbn} className="row">
+                        <div>{r.title}</div>
+                        <div>{r.authors[0]}</div>
+                        <div>{r.isbn}</div>
+                        <div>{r.category}</div>
+                    </div>
+                )}
+            </div>
+        </>
+    )
+
 }

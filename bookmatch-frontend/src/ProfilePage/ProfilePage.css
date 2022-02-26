@@ -31,19 +31,67 @@ section > h2{
     display: block;
 }
 
-.edit > .edit-save-button{
-    display: none;
-    height: 100%;
+.edit .edit-save-button{
+    display: inline-block;
+    width: fit-content;
+    margin-left: 1rem;
+    visibility: hidden;
 }
 
-.edit:hover > .edit-save-button{
-    display: inline-block;
+.edit:hover .edit-save-button{
+    visibility: visible;
+}
+
+.entry{
+    display: flex;
 }
 
 .field{
     display: inline-block;
+    width: fit-content;
+}
+
+.field > textarea{
+    min-width: 50rem;
+    width: 50rem;
+    max-width: 50rem;
+    min-height: 12rem;
+    outline: none;
+    background-color: var(--color-accent-transparent);
+    color: white;
+    border: solid var(--color-accent) 2px;
+    border-radius: 1rem;
+    padding: 1rem;
+}
+
+.field > *{
+    display: inline-block;
+    width: fit-content;
 }
 
 .book-selection{
     margin-bottom: 2rem;
+}
+
+.book-selection > button{
+    margin-top: 1rem;
+}
+
+.results{
+    max-height: 20rem;
+    overflow-y: scroll;
+}
+
+.row{
+    display: flex;
+    margin-bottom: 0.5rem;
+    cursor: pointer;
+}
+
+.row:hover{
+    background-color: rgba(255, 255, 255, 0.13);
+}
+
+.row > div{
+    flex: 100% 1 1;
 }
