@@ -7,7 +7,7 @@ import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.messaging.SessionConnectedEvent;
 import org.springframework.web.socket.messaging.SessionDisconnectEvent;
-import bluescorpions.BookMatchBackend.model.WebSocketChatMessage;
+import bluescorpions.BookMatchBackend.model.Message;
 
 @Component
 public class WebSocketChatEventListener {
@@ -27,7 +27,7 @@ public class WebSocketChatEventListener {
         String username = (String) headerAccessor.getSessionAttributes().get("username");
         if(username != null) {
 
-            WebSocketChatMessage chatMessage = new WebSocketChatMessage();
+            Message chatMessage = new Message();
             chatMessage.setType("Leave");
             chatMessage.setSender(username);
 
