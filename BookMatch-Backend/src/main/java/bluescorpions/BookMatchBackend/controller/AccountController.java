@@ -85,7 +85,7 @@ public class AccountController {
   }
   
   @GetMapping("/addMate")
-  public ResponseEntity<Set<Account>> addMate(@RequestParam Map<String, String> params){
+  public ResponseEntity<Set<Account>> addMate(@CookieValue(name = "email") String email, @RequestParam Map<String, String> params){
     
     String email = params.get("email");
     
@@ -96,6 +96,19 @@ public class AccountController {
     ResponseEntity<Set<Account>> entity = new ResponseEntity(mates, HttpStatus.OK);
     
     return entity;
+  }
+  
+  @GetMapping("/getBooks")
+  public ResponseEntity<Set<Book>> getBooks(@CookieValue(name = "email") String email){
+    
+    Account acc = accountService.getAccount(email);
+    
+    Set<Book> books = acc.getBooks();
+    
+    ResponseEntity<Set<Book>> entity = new ResponseEntity(books, HttpStatus.OK);
+    
+    return entity;
+    
   }
   
   @GetMapping("/setBooks")
