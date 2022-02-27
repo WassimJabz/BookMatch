@@ -20,22 +20,25 @@ public class MatchController {
 	public Account CreateMatch(Account account) {
 		
 		ArrayList<Account> matches;
-		
+		// If the account doesnt have books, return random match
 		if (account.getBooks().size() == 0) {
 			return accountRepository.findRandomAccount();
-			
+		
+			// If account has 1 favorite book, return a random account that has the same 1 book
 		}else if (account.getBooks().size() == 1){
 			matches = (ArrayList<Account>) accountRepository.findByBooks(account.getBooks());
-			
+			// If no match was found, return a random match
 			if(matches.size() == 0) {
 				return accountRepository.findRandomAccount();
 			}else {
 				Random rand = new Random();
 				return matches.get(rand.nextInt(matches.size()-1));
 			}
-			
+			// If the account has 2 favorite books linked to it, return random account that has the same 2 favorite books
 		}else if (account.getBooks().size() == 2) {
 			matches = (ArrayList<Account>) accountRepository.findByBooks(account.getBooks());
+			
+			// If no match was found, check for matches with only 1 book
 			if(matches.size() == 0) {
 				HashSet<Book> book = new HashSet<Book>();
 				for (Book b: account.getBooks()) {
@@ -48,11 +51,12 @@ public class MatchController {
 						return matches.get(rand.nextInt(matches.size()-1));
 					}
 				}
-				System.out.println("No buddies found");
+				return accountRepository.findRandomAccount();
 			}else {
 				Random rand = new Random();
 				return matches.get(rand.nextInt(matches.size()-1));
 			}
+			// IF the account has 3 books
 		}else {
 			matches = (ArrayList<Account>) accountRepository.findByBooks(account.getBooks());
 			if(matches.size() == 0) {
@@ -98,6 +102,5 @@ public class MatchController {
 				return matches.get(rand.nextInt(matches.size()-1));
 			}
 		}
-		return accountRepository.findRandomAccount();
 	}
 }
