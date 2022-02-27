@@ -12,6 +12,7 @@ import bluescorpions.BookMatchBackend.model.Book;
 public interface AccountRepository extends CrudRepository<Account, String>{
 
     public Account findByEmail(String email);
+
     public List<Account> findByBooks(Set<Book> books);
     
     @Query("SELECT column FROM Account && ORDER BY RAND() && LIMIT 1")
