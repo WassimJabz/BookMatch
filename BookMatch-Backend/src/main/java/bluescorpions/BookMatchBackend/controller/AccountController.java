@@ -10,8 +10,12 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CookieValue;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
 import bluescorpions.BookMatchBackend.model.Account;
 import bluescorpions.BookMatchBackend.model.Author;
 import bluescorpions.BookMatchBackend.model.Book;
@@ -19,6 +23,8 @@ import bluescorpions.BookMatchBackend.services.AccountService;
 import bluescorpions.BookMatchBackend.services.AuthorService;
 import bluescorpions.BookMatchBackend.services.BookService;
 
+@CrossOrigin
+@RestController
 public class AccountController {
 
   @Autowired 
@@ -52,7 +58,7 @@ public class AccountController {
     
     String email = params.get("email");
     String password = params.get("password");
-    
+    System.out.println("--------email " + email);
     Account account = accountService.getAccount(email);
     
     if(account != null && account.getPassword().equals(password)) {
@@ -78,7 +84,7 @@ public class AccountController {
     return entity;
   }
   
-  @GetMapping("/getMates")
+  @GetMapping("/addMate")
   public ResponseEntity<Set<Account>> addMate(@RequestParam Map<String, String> params){
     
     String email = params.get("email");
@@ -93,10 +99,10 @@ public class AccountController {
   }
   
   @GetMapping("/setBooks")
-  public ResponseEntity<Void> setBooks(@RequestParam Map<String, String> params){
+  public ResponseEntity<Void> setBooks(@CookieValue(name = "email") String email, @RequestParam Map<String, String> params){
     
-    String email = params.get("email");
-    
+    System.out.println("Email in cookie: " + email);
+
     String book1info = params.get("book1");
     String book2info = params.get("book2");
     String book3info = params.get("book3");

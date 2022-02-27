@@ -25,6 +25,7 @@ function serializeAuthors(authors){
     return authors.join(',')
 }
 
-export function login(username, password){
-    fetch(`http://localhost:8080/login?username=${username}&password=${password}`);
+export function login(email, password){
+    email = email.replace('@', '%40');
+    fetch(`http://localhost:8080/login?email=${email}&password=${password}`);
 }

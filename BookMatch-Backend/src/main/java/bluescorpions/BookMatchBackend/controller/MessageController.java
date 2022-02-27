@@ -8,12 +8,14 @@ import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RestController;
 import bluescorpions.BookMatchBackend.model.Account;
 import bluescorpions.BookMatchBackend.model.Message;
 import bluescorpions.BookMatchBackend.services.AccountService;
 
 @RestController
+@CrossOrigin
 public class MessageController {
 
     @Autowired
