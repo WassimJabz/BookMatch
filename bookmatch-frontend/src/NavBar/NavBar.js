@@ -9,6 +9,7 @@ export default function NavBar(){
                 <a href="/login">Login</a>
                 <a href="/match">Matching</a>
                 <a href="/profile">Profile</a>
+                <a href="/match">Match</a>
             </nav>
         </div>
     )
