@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import { overrideBooks } from "../account";
 import './ProfilePage.css'
 
 export default function ProfilePage(){
@@ -14,6 +15,10 @@ export default function ProfilePage(){
     });
     const [book2, setBook2] = useState(null);
     const [book3, setBook3] = useState(null);
+
+    useEffect(() => {
+        overrideBooks(book1, book2, book3)
+    }, [book1, book2, book3])
 
     return(
         <>

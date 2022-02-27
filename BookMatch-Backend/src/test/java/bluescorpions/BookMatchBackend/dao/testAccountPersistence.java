@@ -44,13 +44,11 @@ public class testAccountPersistence {
         String authorUrl = "test.imgur.fr";
         Author author = new Author();
         author.setName(authorName);
-        author.setUrl(authorUrl);
         
         String authorName2 = "Enzo";
         String authorUrl2 = "test.imgur.fr";
         Author author2 = new Author();
         author2.setName(authorName2);
-        author2.setUrl(authorUrl2);;
         
         HashSet<Author> authors = new HashSet<Author>();
         authors.add(author2);
@@ -59,7 +57,6 @@ public class testAccountPersistence {
         Book book = new Book();
         book.setTitle(title);
         book.setSubject(subject);
-        book.setCoverUrl(coverUrl);
         book.setIsbn(isbn);
         book.setAuthors(authors);
         
