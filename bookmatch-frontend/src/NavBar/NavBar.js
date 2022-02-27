@@ -7,6 +7,7 @@ export default function NavBar(){
             <div className="logo"><a href="/">BookMatch</a></div>
             <nav>
                 <a href="/login">Login</a>
+                <a href="/match">Matching</a>
                 <a href="/profile">Profile</a>
             </nav>
         </div>
