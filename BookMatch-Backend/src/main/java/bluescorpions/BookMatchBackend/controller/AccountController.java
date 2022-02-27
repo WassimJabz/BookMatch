@@ -64,10 +64,6 @@ public class AccountController {
     if(account != null && account.getPassword().equals(password)) {
         Cookie cookie = new Cookie("email", email);
         cookie.setHttpOnly(true);
-        cookie.setSecure(true);
-        cookie.setPath("/");
-        cookie.setMaxAge(100000);
-        cookie.setDomain("127.0.0.1");
         response.addCookie(cookie);
       return ResponseEntity.ok().build();
     }

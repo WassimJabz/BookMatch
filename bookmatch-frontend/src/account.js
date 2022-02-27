@@ -28,6 +28,7 @@ function serializeAuthors(authors){
 export function login(email, password){
     email = email.replace('@', '%40');
     fetch(`http://localhost:8080/login?email=${email}&password=${password}`, {
+        method: 'POST',
         withCredentials: true
     });
 }
