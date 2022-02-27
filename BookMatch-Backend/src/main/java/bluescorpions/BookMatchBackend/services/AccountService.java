@@ -54,6 +54,21 @@ public class AccountService {
       Set<Account> mates = acc.getMates();
       return mates;
     }
+    
+    public void addMate(String email1, String email2) throws Exception{
+      Account acc1 = accountRepository.findByEmail(email1);
+      if(acc1 == null) throw new Exception("Account 1 doesn't exist");
+      Account acc2 = accountRepository.findByEmail(email2);
+      if(acc2 == null) throw new Exception("Account 2 doesn't exist");
+      Set<Account> acc1mates = acc1.getMates();
+      Set<Account> acc2mates = acc2.getMates();
+      acc1mates.add(acc2);
+      acc2mates.add(acc1);
+      accountRepository.save(acc1);
+      accountRepository.save(acc2);
+    }
+    
+    
 
     public void addBook(Account acc, Book b, int bookNr) {
     	
