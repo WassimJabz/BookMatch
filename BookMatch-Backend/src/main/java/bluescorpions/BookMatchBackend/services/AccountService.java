@@ -1,5 +1,6 @@
 package bluescorpions.BookMatchBackend.services;
 
+import java.util.HashSet;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -54,11 +55,24 @@ public class AccountService {
       Set<Account> mates = acc.getMates();
       return mates;
     }
-
-    public void addBook(Account acc, Book b, int bookNr) {
-    	
+    
+    public void addMate(String email1, String email2) throws Exception{
+      Account acc1 = accountRepository.findByEmail(email1);
+      if(acc1 == null) throw new Exception("Account 1 doesn't exist");
+      Account acc2 = accountRepository.findByEmail(email2);
+      if(acc2 == null) throw new Exception("Account 2 doesn't exist");
+      Set<Account> acc1mates = acc1.getMates();
+      Set<Account> acc2mates = acc2.getMates();
+      acc1mates.add(acc2);
+      acc2mates.add(acc1);
+      accountRepository.save(acc1);
+      accountRepository.save(acc2);
     }
-    public void removeBook(Account acc, int bookNr){ 
-    	
+    
+    public void overrideBooks(String email, Set<Book> books) {
+      Account account = accountRepository.findByEmail(email);
+      account.setBooks(books);
+      accountRepository.save(account);
     }
+    
 }

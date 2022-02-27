@@ -8,21 +8,19 @@ import javax.persistence.Id;
 public class Author {
   
   private String name;
-  private String url;
   
+  @Id
   public String getName() {
     return name;
   }
+  
   public void setName(String name) {
     this.name = name;
   }
   
-  @Id
-  public String getUrl() {
-    return url;
-  }
-  public void setUrl(String url) {
-    this.url = url;
+  @Override
+  public int hashCode() {
+    return Objects.hash(name);
   }
   
   @Override
@@ -34,8 +32,10 @@ public class Author {
     if (getClass() != obj.getClass())
       return false;
     Author other = (Author) obj;
-    return Objects.equals(name, other.name) && Objects.equals(url, other.url);
+    return Objects.equals(name, other.name);
   }
+  
+  
   
   
   

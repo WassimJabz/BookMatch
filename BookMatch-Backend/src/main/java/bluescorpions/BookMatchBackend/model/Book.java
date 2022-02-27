@@ -13,7 +13,6 @@ public class Book {
 	private String title;
 	private Set<Author> authors;
 	private String subject;
-	private String coverUrl;
 	
 	@Id
 	public String getIsbn() {
@@ -36,13 +35,7 @@ public class Book {
 	public void setAuthors(Set<Author> authors) {
 		this.authors = authors;
 	}
-	public String getCoverUrl() {
-		return coverUrl;
-	}
-	public void setCoverUrl(String coverUrl) {
-		this.coverUrl = coverUrl;
-	}
-	
+  
   @Override
   public boolean equals(Object obj) {
     if (this == obj)
@@ -52,13 +45,14 @@ public class Book {
     if (getClass() != obj.getClass())
       return false;
     Book other = (Book) obj;
-    return Objects.equals(authors, other.authors) && Objects.equals(coverUrl, other.coverUrl)
-        && Objects.equals(isbn, other.isbn) && Objects.equals(subject, other.subject)
-        && Objects.equals(title, other.title);
+    return Objects.equals(authors, other.authors) && Objects.equals(isbn, other.isbn)
+        && Objects.equals(subject, other.subject) && Objects.equals(title, other.title);
   }
+  
   public String getSubject() {
 		return subject;
-	}
+  }
+  
 	public void setSubject(String subject) {
 		this.subject = subject;
 	}

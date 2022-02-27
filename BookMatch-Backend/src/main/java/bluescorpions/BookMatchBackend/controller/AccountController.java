@@ -1,26 +1,36 @@
 package bluescorpions.BookMatchBackend.controller;
 
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import bluescorpions.BookMatchBackend.model.Account;
+import bluescorpions.BookMatchBackend.model.Author;
+import bluescorpions.BookMatchBackend.model.Book;
 import bluescorpions.BookMatchBackend.services.AccountService;
+import bluescorpions.BookMatchBackend.services.AuthorService;
+import bluescorpions.BookMatchBackend.services.BookService;
 
 public class AccountController {
 
   @Autowired 
   private AccountService accountService;
   
+  @Autowired 
+  private BookService bookService;
+  
+  @Autowired 
+  private AuthorService authorService;
+  
   @GetMapping("/registration")
   public ResponseEntity<Void> register(@RequestParam Map<String, String> params){
     
     String email = params.get("email");
-    String username = params.get("email");
+    String username = params.get("username");
     String password = params.get("password");
     
     try {
@@ -33,9 +43,11 @@ public class AccountController {
     return ResponseEntity.ok().build();
   }
   
-  @GetMapping("/login/{email}/{password}")
-  public ResponseEntity<Void> login(@PathVariable String email, @PathVariable String password){
+  @GetMapping("/login")
+  public ResponseEntity<Void> login(@RequestParam Map<String, String> params){
     
+    String email = params.get("email");
+    String password = params.get("password");
     
     Account account = accountService.getAccount(email);
     
@@ -46,8 +58,10 @@ public class AccountController {
     return ResponseEntity.badRequest().build();
   }
   
-  @GetMapping("/login/{email}")
-  public ResponseEntity<Set<Account>> fetchMates(@PathVariable String email){
+  @GetMapping("/getMates")
+  public ResponseEntity<Set<Account>> fetchMates(@RequestParam Map<String, String> params){
+    
+    String email = params.get("email");
     
     Account account = accountService.getAccount(email);
     
@@ -56,6 +70,101 @@ public class AccountController {
     ResponseEntity<Set<Account>> entity = new ResponseEntity(mates, HttpStatus.OK);
     
     return entity;
+  }
+  
+  @GetMapping("/getMates")
+  public ResponseEntity<Set<Account>> addMate(@RequestParam Map<String, String> params){
+    
+    String email = params.get("email");
+    
+    Account account = accountService.getAccount(email);
+    
+    Set<Account> mates = account.getMates();
+    
+    ResponseEntity<Set<Account>> entity = new ResponseEntity(mates, HttpStatus.OK);
+    
+    return entity;
+  }
+  
+  @GetMapping("/setBooks")
+  public ResponseEntity<Void> setBooks(@RequestParam Map<String, String> params){
+    
+    String email = params.get("email");
+    
+    String book1info = params.get("book1");
+    String book2info = params.get("book2");
+    String book3info = params.get("book3");
+    
+    String[] book1arr = (book1info == null)? null : book1info.split("|");
+    String[] book2arr = (book2info == null)? null : book2info.split("|");
+    String[] book3arr = (book3info == null)? null : book3info.split("|");
+    
+    Set<Book> bookSet = new HashSet();
+    try {
+      
+      if (book1arr != null) {
+        String isbn = book1arr[0];
+        String title = book1arr[1];
+        String[] authors = book1arr[2].split(",");
+        String subject = book1arr[3];
+
+        Set<Author> authorSet = new HashSet();
+
+        for (String a : authors)
+          authorSet.add(authorService.createAuthor(a));
+
+
+        Book book = bookService.CreateBook(isbn, title, authorSet, subject);
+
+
+        bookSet.add(book);
+
+      }
+      
+      if (book2arr != null) {
+        String isbn = book2arr[0];
+        String title = book2arr[1];
+        String[] authors = book2arr[2].split(",");
+        String subject = book2arr[3];
+
+        Set<Author> authorSet = new HashSet();
+
+        for (String a : authors)
+          authorSet.add(authorService.createAuthor(a));
+
+
+        Book book = bookService.CreateBook(isbn, title, authorSet, subject);
+
+
+        bookSet.add(book);
+
+      }
+      
+      if (book3arr != null) {
+        String isbn = book3arr[0];
+        String title = book3arr[1];
+        String[] authors = book3arr[2].split(",");
+        String subject = book3arr[3];
+
+        Set<Author> authorSet = new HashSet();
+
+        for (String a : authors)
+          authorSet.add(authorService.createAuthor(a));
+
+
+        Book book = bookService.CreateBook(isbn, title, authorSet, subject);
+
+
+        bookSet.add(book);
+
+      }
+      
+      accountService.overrideBooks(email, bookSet);
+      
+    }
+    catch(Exception e) {
+      
+    }
   }
   
 }

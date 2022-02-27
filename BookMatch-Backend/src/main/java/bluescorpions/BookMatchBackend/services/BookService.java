@@ -17,20 +17,15 @@ public class BookService {
     public static final Pattern VALID_COVER_URL_REGEX = 
             Pattern.compile("^(https?|ftp|file)://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]", Pattern.CASE_INSENSITIVE);
     
-    public void CreateBook(String isbn, String title, Set<Author> Authors, String subject, String coverUrl) throws Exception{
-     // Checking url
-        Matcher matcher = VALID_COVER_URL_REGEX.matcher(coverUrl);
-        if(!matcher.find()) throw new Exception("Invalid cover url");
-        
-        if(getBook(isbn) != null) throw new Exception("Book already exists in Database.");
+    public Book CreateBook(String isbn, String title, Set<Author> Authors, String subject) throws Exception{
         
         Book b = new Book();
         b.setIsbn(isbn);
         b.setTitle(title);
         b.setSubject(subject);
         b.setAuthors(Authors);
-        b.setCoverUrl(coverUrl);
         bookRepository.save(b);
+        return b;
     } 
     public Book getBook(String isbn) {
       Book book = bookRepository.findByIsbn(isbn);
