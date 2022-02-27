@@ -18,7 +18,7 @@ export function overrideBooks(book1, book2, book3){
 }
 
 function serializeBook(book){
-    return `${book.isbn}%7C${book.title}%7C${serializeAuthors(book.authors)}%7C%${book.category}`;
+    return `${book.isbn}%7C${book.title}%7C${serializeAuthors(book.authors)}%7C${book.category}`;
 }
 
 function serializeAuthors(authors){
@@ -27,5 +27,7 @@ function serializeAuthors(authors){
 
 export function login(email, password){
     email = email.replace('@', '%40');
-    fetch(`http://localhost:8080/login?email=${email}&password=${password}`);
+    fetch(`http://localhost:8080/login?email=${email}&password=${password}`, {
+        withCredentials: true
+    });
 }

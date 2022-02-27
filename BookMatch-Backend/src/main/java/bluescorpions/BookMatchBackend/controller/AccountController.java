@@ -58,11 +58,15 @@ public class AccountController {
     
     String email = params.get("email");
     String password = params.get("password");
-    System.out.println("--------email " + email);
     Account account = accountService.getAccount(email);
     
     if(account != null && account.getPassword().equals(password)) {
         Cookie cookie = new Cookie("email", email);
+        cookie.setHttpOnly(true);
+        cookie.setSecure(true);
+        cookie.setPath("/");
+        cookie.setMaxAge(100000);
+        cookie.setDomain("127.0.0.1");
         response.addCookie(cookie);
       return ResponseEntity.ok().build();
     }
@@ -115,12 +119,12 @@ public class AccountController {
     String book1info = params.get("book1");
     String book2info = params.get("book2");
     String book3info = params.get("book3");
+
+    String[] book1arr = (book1info == null)? null : book1info.split("\\|");
+    String[] book2arr = (book2info == null)? null : book2info.split("\\|");
+    String[] book3arr = (book3info == null)? null : book3info.split("\\|");
     
-    String[] book1arr = (book1info == null)? null : book1info.split("|");
-    String[] book2arr = (book2info == null)? null : book2info.split("|");
-    String[] book3arr = (book3info == null)? null : book3info.split("|");
-    
-    Set<Book> bookSet = new HashSet();
+    Set<Book> bookSet = new HashSet<Book>();
     
     try {
       
@@ -130,7 +134,7 @@ public class AccountController {
         String[] authors = book1arr[2].split(",");
         String subject = book1arr[3];
 
-        Set<Author> authorSet = new HashSet();
+        Set<Author> authorSet = new HashSet<Author>();
 
         for (String a : authors)
           authorSet.add(authorService.createAuthor(a));
