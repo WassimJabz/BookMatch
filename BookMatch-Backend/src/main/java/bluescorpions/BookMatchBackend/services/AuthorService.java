@@ -17,30 +17,23 @@ public class AuthorService {
     public static final Pattern VALID_URL_REGEX = 
             Pattern.compile("^(https?|ftp|file)://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]", Pattern.CASE_INSENSITIVE);
     
-    public void CreateAuthor(String name, String url) throws Exception{      
+    public Author createAuthor(String name) throws Exception{      
         
         // Checking name, url validity
         if(!name.matches("[a-zA-Z]+")) {
         	throw new Exception("Invalid name");
         }
         
-        Matcher matcher = VALID_URL_REGEX.matcher(url);
-        if(!matcher.find()) throw new Exception("Invalid url");
-        
         Author auth = new Author();
         auth.setName(name);
-        auth.setUrl(url);
         authorRepository.save(auth);
+        return auth;
     }
     
-    public void EditAuthor(String name, String url) throws Exception{
+    public void EditAuthor(String name) throws Exception{
     	Author auth = getAuthor(name);
     	if(auth == null) throw new Exception("No author with this name in Database.");
-    	//Check if new url valid
-    	Matcher matcher = VALID_URL_REGEX.matcher(url);
-        if(!matcher.find()) throw new Exception("Invalid url");
         authorRepository.delete(auth);
-        auth.setUrl(url);
         authorRepository.save(auth);
     }
     

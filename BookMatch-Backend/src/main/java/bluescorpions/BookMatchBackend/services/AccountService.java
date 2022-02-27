@@ -1,5 +1,6 @@
 package bluescorpions.BookMatchBackend.services;
 
+import java.util.HashSet;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -68,12 +69,10 @@ public class AccountService {
       accountRepository.save(acc2);
     }
     
+    public void overrideBooks(String email, Set<Book> books) {
+      Account account = accountRepository.findByEmail(email);
+      account.setBooks(books);
+      accountRepository.save(account);
+    }
     
-
-    public void addBook(Account acc, Book b, int bookNr) {
-    	
-    }
-    public void removeBook(Account acc, int bookNr){ 
-    	
-    }
 }
