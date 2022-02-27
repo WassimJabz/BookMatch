@@ -1,5 +1,6 @@
 package bluescorpions.BookMatchBackend.services;
 
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,10 @@ public class AccountService {
         Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(email);
         if(!matcher.find()) throw new Exception("Invalid email");
         
+        // Verifying not already in database
+        Account test = accountRepository.findByEmail(email);
+        if(test != null) throw new Exception("Already in database");
+   
         Account acc = new Account();
         acc.setEmail(email);
         acc.setUsername(username);
@@ -41,4 +46,11 @@ public class AccountService {
       Account account = accountRepository.findByEmail(email);
       return account;
     }
-}
+    
+    public Set<Account> getMates(String email) throws Exception{
+      Account acc = accountRepository.findByEmail(email);
+      if(acc == null) throw new Exception("Account doesn't exist");
+      Set<Account> mates = acc.getMates();
+      return mates;
+    }
+ }
