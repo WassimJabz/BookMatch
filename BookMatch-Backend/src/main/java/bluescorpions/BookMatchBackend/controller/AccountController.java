@@ -87,8 +87,6 @@ public class AccountController {
   @GetMapping("/addMate")
   public ResponseEntity<Set<Account>> addMate(@CookieValue(name = "email") String email, @RequestParam Map<String, String> params){
     
-    String email = params.get("email");
-    
     Account account = accountService.getAccount(email);
     
     Set<Account> mates = account.getMates();
@@ -113,8 +111,6 @@ public class AccountController {
   
   @GetMapping("/setBooks")
   public ResponseEntity<Void> setBooks(@CookieValue(name = "email") String email, @RequestParam Map<String, String> params){
-    
-    System.out.println("Email in cookie: " + email);
 
     String book1info = params.get("book1");
     String book2info = params.get("book2");
@@ -125,6 +121,7 @@ public class AccountController {
     String[] book3arr = (book3info == null)? null : book3info.split("|");
     
     Set<Book> bookSet = new HashSet();
+    
     try {
       
       if (book1arr != null) {

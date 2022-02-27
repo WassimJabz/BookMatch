@@ -14,6 +14,7 @@ public class BookService {
     
     @Autowired
     BookRepository bookRepository;
+    
     public static final Pattern VALID_COVER_URL_REGEX = 
             Pattern.compile("^(https?|ftp|file)://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]", Pattern.CASE_INSENSITIVE);
     
