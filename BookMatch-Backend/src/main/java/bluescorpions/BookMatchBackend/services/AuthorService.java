@@ -14,15 +14,8 @@ public class AuthorService {
     @Autowired
     AuthorRepository authorRepository;
     
-    public static final Pattern VALID_URL_REGEX = 
-            Pattern.compile("^(https?|ftp|file)://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]", Pattern.CASE_INSENSITIVE);
     
     public Author createAuthor(String name) throws Exception{      
-        
-        // Checking name, url validity
-        if(!name.matches("[a-zA-Z]+")) {
-        	throw new Exception("Invalid name");
-        }
         
         Author auth = new Author();
         auth.setName(name);
