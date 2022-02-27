@@ -3,6 +3,10 @@ package bluescorpions.BookMatchBackend.controller;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -44,7 +48,7 @@ public class AccountController {
   }
   
   @GetMapping("/login")
-  public ResponseEntity<Void> login(@RequestParam Map<String, String> params){
+  public ResponseEntity<Void> login(@RequestParam Map<String, String> params, HttpServletResponse response){
     
     String email = params.get("email");
     String password = params.get("password");
@@ -52,6 +56,8 @@ public class AccountController {
     Account account = accountService.getAccount(email);
     
     if(account != null && account.getPassword().equals(password)) {
+        Cookie cookie = new Cookie("email", email);
+        response.addCookie(cookie);
       return ResponseEntity.ok().build();
     }
     
@@ -163,8 +169,10 @@ public class AccountController {
       
     }
     catch(Exception e) {
-      
+      return ResponseEntity.badRequest().build();
     }
+
+    return ResponseEntity.ok().build();
   }
   
 }
