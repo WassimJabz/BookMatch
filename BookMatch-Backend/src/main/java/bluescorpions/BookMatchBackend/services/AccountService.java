@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 import bluescorpions.BookMatchBackend.dao.AccountRepository;
 import bluescorpions.BookMatchBackend.model.Account;
+import bluescorpions.BookMatchBackend.model.Book;
 
 @RestController
 public class AccountService {
@@ -53,4 +54,11 @@ public class AccountService {
       Set<Account> mates = acc.getMates();
       return mates;
     }
- }
+
+    public void addBook(Account acc, Book b, int bookNr) {
+    	
+    }
+    public void removeBook(Account acc, int bookNr){ 
+    	
+    }
+}
