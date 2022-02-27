@@ -1,11 +1,13 @@
 package bluescorpions.BookMatchBackend.controller;
 
+import java.util.Map;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import bluescorpions.BookMatchBackend.model.Account;
 import bluescorpions.BookMatchBackend.services.AccountService;
 
@@ -14,8 +16,12 @@ public class AccountController {
   @Autowired 
   private AccountService accountService;
   
-  @GetMapping("/registration/{email}/{username}/{password}")
-  public ResponseEntity<Void> register(@PathVariable String email, @PathVariable String username, @PathVariable String password){
+  @GetMapping("/registration")
+  public ResponseEntity<Void> register(@RequestParam Map<String, String> params){
+    
+    String email = params.get("email");
+    String username = params.get("email");
+    String password = params.get("password");
     
     try {
       accountService.CreateAccount(email, username, password);
